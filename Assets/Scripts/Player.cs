@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -14,16 +15,21 @@ public class Player : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
-    private float horizontalScreenLimit = 9.5f;
-    private float verticalScreenLimit = 3.5f;
+    public float horizontalScreenLimit = 10f;
+    public float verticalScreenLimit = 6.5f;
 
     public GameObject bulletPrefab;
+    private int lives = 3;
+
+    private GameManager gameManager;
 
     void Start()
     {
         playerSpeed = 5.5f;
         //This function is called at the start of the game
         transform.position= new Vector3(0, -3.43f, 0);
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        
     }
 
     void Update()
