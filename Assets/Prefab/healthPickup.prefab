@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1153971261024385536}
   - component: {fileID: 1466850193794127271}
-  - component: {fileID: -5972368567246304449}
   - component: {fileID: -7928318701749867171}
   - component: {fileID: 522500294869763763}
+  - component: {fileID: 5727487189262334095}
   m_Layer: 0
   m_Name: healthPickup
   m_TagString: Untagged
@@ -87,18 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5972368567246304449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399777361290925901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ef0b4fca2d8f7e49b6b39541897d399, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-7928318701749867171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,3 +146,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.94, y: 4.43}
   m_EdgeRadius: 0
+--- !u!114 &5727487189262334095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399777361290925901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688efa98a6faa5a48bc42b2965d789e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

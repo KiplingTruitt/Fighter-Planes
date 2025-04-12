@@ -95,11 +95,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3941808009015437076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87ca7826bf894ed4aaef95c878c0644b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8784919844b627f4dabbd9c895e8d3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 1886710396827344234, guid: e8e63456aa1d9d240ab38a0453e59388, type: 3}
-  timer: 0
   speed: 3.5
 --- !u!61 &-8259715950957674645
 BoxCollider2D:

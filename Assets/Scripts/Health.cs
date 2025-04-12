@@ -28,8 +28,10 @@ public class Health : MonoBehaviour
     {
         if (whatDidIHit.tag == "Player")
         {
+            gameManager.PlaySound(1);
             whatDidIHit.GetComponent<PlayerController>().GainALife();
             Destroy(this.gameObject);
         }
+
     }
 }    
