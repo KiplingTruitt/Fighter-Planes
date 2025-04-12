@@ -40,4 +40,5 @@ public class Enemy : MonoBehaviour
             gameManager.ChangeScoreText(5);
         }
     }
-}
+
+    }
