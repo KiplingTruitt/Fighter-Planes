@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyThree : MonoBehaviour
+public class EnemyTwo : MonoBehaviour
 {
+    // Start is called before the first frame update
 
     public GameObject explosionPrefab;
     private float timer;
     public float speed;
+    private float y;
+    private float x;
     private GameManager gameManager;
 
     // Start is called before the first frame update
@@ -20,19 +23,37 @@ public class EnemyThree : MonoBehaviour
     void Update()
     {
         {
+            y = transform.position.y;
+            x = transform.position.x;
             timer += Time.deltaTime;
-            if (timer < 1.8)
+            if (timer < 1.9)
             {
                 transform.Translate(Vector3.down * speed * Time.deltaTime);
             }
 
-            if (timer >= 1.8)
+            if (timer > 1.9)
             {
-                transform.Translate(Vector3.down * speed * Time.deltaTime * 5.5f);
+
+                transform.position = new Vector3((Random.Range(x + 6, x - 6)), y, 0);
+                
+                timer = 0;
+
+            }
+
+            if (x <= -gameManager.horizontalScreenSize * 1.05f)
+            {
+                transform.position = new Vector3((Random.Range (x + 3,x + 6)), y, 0);
+                timer = 0;
+            }
+            
+            if (x >= gameManager.horizontalScreenSize * 1.05f)
+            {
+                transform.position = new Vector3((Random.Range(x - 3, x - 6)), y, 0);
+                timer = 0;
             }
 
 
-            if (transform.position.y >= gameManager.verticalScreenSize * 1.25f || transform.position.y <= -gameManager.verticalScreenSize * 1.25f)
+                if (transform.position.y >= gameManager.verticalScreenSize * 1.25f || transform.position.y <= -gameManager.verticalScreenSize * 1.25f)
             {
                 Destroy(this.gameObject);
             }
@@ -56,4 +77,5 @@ public class EnemyThree : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 }

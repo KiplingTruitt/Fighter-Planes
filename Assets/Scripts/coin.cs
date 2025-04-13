@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class coin : MonoBehaviour
 {
-
-    private float timer;
+    public GameObject coinPrefab;
     private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
@@ -16,17 +15,16 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void OnTriggerEnter2D(Collider2D whatDidIHit)
     {
         if (whatDidIHit.tag == "Player")
         {
-            gameManager.PlaySound(1);
-            whatDidIHit.GetComponent<PlayerController>().GainALife();
+            gameManager.AddScore(1);
             Destroy(this.gameObject);
+            gameManager.PlaySound(3);
         }
-
     }
-}    
+}

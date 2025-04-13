@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.XR;
 
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public GameObject explosionPrefab;
     public GameObject thrusterPrefab;
     public GameObject shieldPrefab;
+    public bool Shield;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
         lives = 3;
         speed = 5.0f;
         weaponType = 1;
+        Shield = false;
         gameManager.ChangeLivesText(lives);
     }
 
@@ -45,8 +48,28 @@ public class PlayerController : MonoBehaviour
         //If not: lose a life
         //lives = lives - 1;
         //lives -= 1;
-        lives--;
-        gameManager.ChangeLivesText(lives);
+        {
+            //lives = lives - 1;
+            //lives -= 1;
+            if (Shield == false)
+            //lose a life
+            {
+                lives--;
+                gameManager.ChangeLivesText(lives);
+            }
+            else
+            //do not lose a life, deactivate shield instead!
+            {
+                shieldPrefab.SetActive(false);
+                Shield = false;
+                gameManager.PlaySound(2);
+                gameManager.ManagePowerupText(0);
+                gameManager.AddScore(5);
+            }
+        }
+    
+
+      
         if (lives == 0)
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
@@ -95,10 +118,14 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShieldPowerDown()
     {
+    
         yield return new WaitForSeconds(3f);
         gameManager.ManagePowerupText(0);
         gameManager.PlaySound(2);
-    }
+        shieldPrefab.SetActive(false);
+        Shield = false;
+
+}
     private void OnTriggerEnter2D(Collider2D whatDidIHit)
     {
         if(whatDidIHit.tag == "Powerup")
@@ -126,13 +153,23 @@ public class PlayerController : MonoBehaviour
                     gameManager.ManagePowerupText(3);
                     break;
                 case 4:
-                    //Picked up shield
-                    //Do I already have a shield?
-                    //If yes: do nothing
-                    //If not: activate the shield's visibility
-                    StartCoroutine(ShieldPowerDown());
-                    gameManager.ManagePowerupText(4);
+                    if (Shield == true)
+                    {
+                        //do nothing
+                        Debug.Log("Shield is already active");
+                    }
+                    else
+                    {
+                        //activate the shield's visibility
+                        Shield = true;
+                        shieldPrefab.SetActive(true);//Picked up shield
+                        StartCoroutine(ShieldPowerDown());
+                        gameManager.ManagePowerupText(4);     
+                    }
+                        
                     break;
+               
+                    
             }
         }
     }
@@ -163,9 +200,9 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
+        transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * speed);
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * speed);
 
         float horizontalScreenSize = gameManager.horizontalScreenSize;
         float verticalScreenSize = gameManager.verticalScreenSize;
@@ -175,10 +212,14 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x * -1, transform.position.y, 0);
         }
 
-        if (transform.position.y <= -verticalScreenSize || transform.position.y > verticalScreenSize)
+        if (transform.position.y <= -verticalScreenSize/1.6f)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y * -1, 0);
+            transform.position = new Vector3(transform.position.x, (-verticalScreenSize/1.6f), 0);
         }
 
+        if (transform.position.y > 1.11f)
+        {
+            transform.position = new Vector3(transform.position.x, 1.11f, 0);
+        }
     }
 }

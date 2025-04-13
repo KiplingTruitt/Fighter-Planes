@@ -153,15 +153,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6465214131589529892, guid: 2946f3eb6029d8a40b20e03adb96e4fa, type: 3}
   enemyOnePrefab: {fileID: 8729755512266785908, guid: 57d7aa5182902e24cb707961f14f52d5, type: 3}
+  enemyTwoPrefab: {fileID: 3941808009015437076, guid: 30e4ca3020d238e43b055b0cab0ae9af, type: 3}
   enemyThreePrefab: {fileID: 3941808009015437076, guid: 9ab28647aeaaec4479872b6211c91fb4, type: 3}
   cloudPrefab: {fileID: 8901978872678414076, guid: 14dd4fa52784c904e83c0650f3eea560, type: 3}
   healthPickupPrefab: {fileID: 1399777361290925901, guid: 24907a23044975f4989100a0eb9448cd, type: 3}
+  coinPrefab: {fileID: 8517178103152700310, guid: ea8a30744f03e814081aebb083f02c7b, type: 3}
   gameOverText: {fileID: 1300629032}
   restartText: {fileID: 242308751}
   powerupPrefab: {fileID: 7115967532009685895, guid: c119aaa292ebc134cbba3b4a20748972, type: 3}
   audioPlayer: {fileID: 1139858143}
   powerupSound: {fileID: 8300000, guid: 752ca85f206f14146942c3fcafbdd492, type: 3}
   powerdownSound: {fileID: 8300000, guid: 86237706879f3c44db594d2c5cb1f7b3, type: 3}
+  Coin: {fileID: 8300000, guid: 90b3ebbc618813a44b27143d1d188ff7, type: 3}
   livesText: {fileID: 999943548}
   scoreText: {fileID: 687267809}
   powerupText: {fileID: 1339041341}

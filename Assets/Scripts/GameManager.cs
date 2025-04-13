@@ -5,15 +5,18 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 public class GameManager : MonoBehaviour
 {
 
     public GameObject playerPrefab;
     public GameObject enemyOnePrefab;
+    public GameObject enemyTwoPrefab;
     public GameObject enemyThreePrefab;
     public GameObject cloudPrefab;
     public GameObject healthPickupPrefab;
+    public GameObject coinPrefab;
     public GameObject gameOverText;
     public GameObject restartText;
     public GameObject powerupPrefab;
@@ -21,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     public AudioClip powerupSound;
     public AudioClip powerdownSound;
+    public AudioClip Coin;
 
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI scoreText;
@@ -46,8 +50,10 @@ public class GameManager : MonoBehaviour
         Instantiate(playerPrefab, transform.position, Quaternion.identity);
         CreateSky();
         InvokeRepeating("CreateEnemy", 1, 3);
+        InvokeRepeating("CreateEnemyTwo", 4, 6);
         InvokeRepeating("CreateEnemyThree", 2, 4);
         InvokeRepeating("CreateHealthPickup", 8, Random.Range(8, 12));
+        InvokeRepeating("CreateCoin", 5, 7);
         StartCoroutine(SpawnPowerup());
         powerupText.text = "No powerups yet!";
     }
@@ -66,6 +72,11 @@ public class GameManager : MonoBehaviour
         Instantiate(enemyOnePrefab, new Vector3(Random.Range(-horizontalScreenSize, horizontalScreenSize) * 0.9f, verticalScreenSize, 0), Quaternion.Euler(180, 0, 0));
     }
 
+    void CreateEnemyTwo()
+    {
+        Instantiate(enemyTwoPrefab, new Vector3(Random.Range(-horizontalScreenSize, horizontalScreenSize) * 0.9f, verticalScreenSize, 0), Quaternion.Euler(0, 0, 0));
+    }
+
     void CreateEnemyThree()
     {
         Instantiate(enemyThreePrefab, new Vector3(Random.Range(-horizontalScreenSize, horizontalScreenSize) * 0.9f, verticalScreenSize, 0), Quaternion.Euler(0, 0, 0));
@@ -73,12 +84,17 @@ public class GameManager : MonoBehaviour
 
     void CreateHealthPickup()
     {
-        Instantiate(healthPickupPrefab, new Vector3(Random.Range(-horizontalScreenSize, horizontalScreenSize) * 0.9f, verticalScreenSize, 0), Quaternion.Euler(0, 0, 0));
+        Instantiate(healthPickupPrefab, new Vector3(Random.Range(-horizontalScreenSize * 0.8f, horizontalScreenSize * 0.8f), Random.Range(-verticalScreenSize * 0.45f, verticalScreenSize * 0.85f), 0), Quaternion.Euler(0, 0, 0));
     }
 
+    void CreateCoin()
+    {
+        Instantiate(coinPrefab, new Vector3(Random.Range(-horizontalScreenSize * 0.8f, horizontalScreenSize * 0.8f), Random.Range(-verticalScreenSize * 0.45f, verticalScreenSize * 0.85f), 0), Quaternion.identity);
+    }
+    
     void CreatePowerup()
     {
-        Instantiate(powerupPrefab, new Vector3(Random.Range(-horizontalScreenSize * 0.8f, horizontalScreenSize * 0.8f), Random.Range(-verticalScreenSize * 0.8f, verticalScreenSize * 0.8f), 0), Quaternion.identity);
+        Instantiate(powerupPrefab, new Vector3(Random.Range(-horizontalScreenSize * 0.8f, horizontalScreenSize * 0.8f), Random.Range(-verticalScreenSize * 0.45f, verticalScreenSize * 0.85f), 0), Quaternion.identity);
     }
 
     void CreateSky()
@@ -114,10 +130,22 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnPowerup()
     {
+        if (gameOver == false)
+        {
+            powerupPrefab.SetActive(true);
+        }
         float spawnTime = Random.Range(3, 5); 
         yield return new WaitForSeconds(spawnTime);
         CreatePowerup();
         StartCoroutine(SpawnPowerup());
+        if (gameOver == true)
+        {
+            powerupPrefab.SetActive(false);
+        }
+
+
+
+            
     }
 
     public void PlaySound(int whichSound)
@@ -130,7 +158,10 @@ public class GameManager : MonoBehaviour
             case 2:
                 audioPlayer.GetComponent<AudioSource>().PlayOneShot(powerdownSound);
                 break;
-        }
+            case 3:
+                audioPlayer.GetComponent<AudioSource>().PlayOneShot(Coin);
+                break;        
+        }       
     }
 
     public void AddScore(int earnedScore)
